@@ -1,0 +1,92 @@
+package com.company;
+
+import java.util.ArrayList;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Pepsi");
+        items.add("Sunflower Seeds");
+        items.add("Coke");
+        items.add("Dell Charger");
+        items.add("Red-Hot Spicy Doritos");
+        items.add("Mac Charger");
+        items.add("Peanuts");
+        items.add("Cool Ranch Doritos");
+        items.add("Five Hour Energy");
+        items.add("Diet Coke");
+
+        ArrayList<Double> pricelist = new ArrayList<Double>();
+        pricelist.add(0.99);
+        pricelist.add(0.99);
+        pricelist.add(0.99);
+        pricelist.add(50.00);
+        pricelist.add(2.99);
+        pricelist.add(120.00);
+        pricelist.add(0.99);
+        pricelist.add(2.99);
+        pricelist.add(3.99);
+        pricelist.add(0.99);
+        
+
+        String Receipt = "";
+        ArrayList<String> useritems = new ArrayList<String>();
+        ArrayList<Integer> count = new ArrayList<Integer>();
+        Scanner userinfo = new Scanner(System.in);
+        String info;
+        double total;
+        double finalsales = 0;
+
+        System.out.println(" Hello! Provide your customer name ");
+        info = userinfo.nextLine();
+        
+        while (!(info.equalsIgnoreCase("Exit"))) {
+            System.out.println("Enter your item (or 'Exit' to terminate order: ");
+            total = 0;
+            Receipt += "\n" + info;
+            info = userinfo.nextLine();
+            
+            while (!(info.equalsIgnoreCase("Exit"))) {
+
+                for (String curritem: items) {
+                    
+                    if (curritem.contains(info) || curritem.equalsIgnoreCase(info)) {
+                        total += pricelist.get(items.indexOf(curritem));
+                        Receipt += "\n\t" + info;
+
+                        if (!useritems.contains(info)) {
+                            useritems.add(info);
+                            count.add(1);
+                        }
+                        else {
+                            int i = useritems.indexOf(info);
+                            count.set(i, count.get(i) + 1);
+                        }
+
+                        break;
+                    }
+
+                }
+                info = userinfo.nextLine();
+            }
+
+            Receipt += "\n\t\t" + String.format("%.2f", total) + "\n";
+            finalsales += total;
+            System.out.println("\nEnter your Item (or 'Exit' to terminate order: ");
+            info = userinfo.nextLine();
+        }
+
+        System.out.println("\nRECEIPT:" + Receipt);
+        System.out.println("\nINVENTORY SOLD: ");
+
+        for (String a: useritems) {
+            System.out.println("\t" + a + " (" + count.get(useritems.indexOf(a)) + ")");
+        }
+
+        System.out.format("\nGRAND TOTAL: " + String.format("%.2f", finalsales));
+    }
+}
